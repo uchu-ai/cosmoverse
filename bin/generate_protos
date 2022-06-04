@@ -1,0 +1,71 @@
+#!/bin/bash
+
+set -e
+
+COSMOS_SDK_VERSION=0.46.0-rc1
+COSMOS_PROTO_VERSION=1.0.0-alpha7
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  SED=gsed
+else
+  SED=sed
+fi
+
+rm -rf $DIR/../proto
+rm -rf $DIR/../cosmoverse/proto
+mkdir $DIR/../cosmoverse/proto
+mkdir $DIR/../proto
+mkdir $DIR/../proto/cosmos_proto
+mkdir $DIR/../proto/google
+
+# Begin downloading proto files
+curl https://github.com/cosmos/cosmos-sdk/archive/refs/tags/v$COSMOS_SDK_VERSION.tar.gz -L | \
+  tar -xz -C $DIR/../proto/ --strip-components=2 cosmos-sdk-$COSMOS_SDK_VERSION/proto
+
+
+curl https://github.com/cosmos/cosmos-proto/archive/refs/tags/v$COSMOS_PROTO_VERSION.tar.gz -L | \
+  tar -xz -C $DIR/../proto/cosmos_proto/ --strip-components=3 cosmos-proto-$COSMOS_PROTO_VERSION/proto/cosmos_proto
+
+curl https://github.com/googleapis/googleapis/archive/refs/heads/master.tar.gz -L | \
+  tar -xz -C $DIR/../proto/google/ --strip-components=2 googleapis-master/google
+
+find $DIR/../proto/ -type f -not -name '*.proto' -delete
+# Finished downloading protos
+
+# Removing gogoproto from proto files
+find $DIR/../proto/ -type f -exec $SED -i "/gogoproto\/gogo/d" {} \;
+find $DIR/../proto/ -type f -exec $SED -i "/option (gogoproto/d" {} \;
+find $DIR/../proto/ -type f -exec $SED -i "/^ *(gogoproto\.\w*) *= *[^ ]*$/d" {} \;
+find $DIR/../proto/ -type f -exec $SED -i "s/,  *(gogoproto\.\w*) *= *[^ ]*, /, /g" {} \;
+find $DIR/../proto/ -type f -exec $SED -i "s/,  *(gogoproto\.\w*) *= *[^ ]*\]/]/g" {} \;
+find $DIR/../proto/ -type f -exec $SED -i "s/(gogoproto\.\w*) *= *[^ ]*\]/]/g" {} \;
+find $DIR/../proto/ -type f -exec $SED -i "s/ *\[\];/;/g" {} \;
+# Finished removal of gogoproto from proto files
+
+find $DIR/../proto/ -type f -exec $SED -i "s/^package /package cosmoverse.proto./g" {} \;
+$SED -i "s/extend google\.protobuf\.MethodOptions/extend .google.protobuf.MethodOptions/g" $DIR/../proto/google/api/annotations.proto;
+
+grpc_tools_ruby_protoc \
+  -I $DIR/../proto \
+  --ruby_out=$DIR/../lib/cosmoverse/proto \
+  --grpc_out=$DIR/../lib/cosmoverse/proto \
+  $DIR/../proto/cosmos/bank/v1beta1/query.proto \
+  $DIR/../proto/cosmos/base/query/v1beta1/pagination.proto \
+  $DIR/../proto/cosmos/base/v1beta1/coin.proto \
+  $DIR/../proto/cosmos/bank/v1beta1/bank.proto \
+  $DIR/../proto/cosmos/msg/v1/msg.proto \
+  $DIR/../proto/tendermint/abci/types.proto \
+  $DIR/../proto/tendermint/crypto/proof.proto \
+  $DIR/../proto/tendermint/types/types.proto \
+  $DIR/../proto/tendermint/version/types.proto \
+  $DIR/../proto/tendermint/types/validator.proto \
+  $DIR/../proto/tendermint/crypto/keys.proto \
+  $DIR/../proto/tendermint/types/params.proto \
+  $DIR/../proto/cosmos_proto/cosmos.proto
+
+find $DIR/../lib/cosmoverse/proto/ -type f -exec $SED/../ -i "s/^require 'cosmos/require 'cosmoverse\/proto\/cosmos/g" {} \;
+find $DIR/../lib/cosmoverse/proto/ -type f -exec $SED -i "s/self.service_name = \"cosmoverse.proto./self.service_name = \"/g" {} \;
+
+cd $DIR/.. && bundle exec rubocop -A lib/cosmoverse/proto && cd $DIR

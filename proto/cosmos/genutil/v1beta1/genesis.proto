@@ -1,0 +1,11 @@
+syntax = "proto3";
+package cosmoverse.proto.cosmos.genutil.v1beta1;
+
+
+option go_package = "github.com/cosmos/cosmos-sdk/x/genutil/types";
+
+// GenesisState defines the raw genesis transaction in JSON.
+message GenesisState {
+  // gen_txs defines the genesis transactions.
+  repeated bytes gen_txs = 1;
+}

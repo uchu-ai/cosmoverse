@@ -16,3 +16,21 @@ Style/StringLiteralsInInterpolation:
 
 Layout/LineLength:
   Max: 120
+  Exclude:
+    - lib/cosmoverse/proto/**/*
+
+Metrics/BlockLength:
+  Exclude:
+    - lib/cosmoverse/proto/**/*
+    - lib/cosmoverse/cosmos/gogoproto/**/*
+
+Lint/EmptyBlock:
+  Exclude:
+    - lib/cosmoverse/proto/**/*
+
+Metrics/MethodLength:
+  Exclude:
+    - test/**/*
+
+Style/Documentation:
+  Enabled: false

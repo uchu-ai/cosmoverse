@@ -1,0 +1,22 @@
+version: '3'
+services:
+  gaia:
+    build:
+      context: .
+      dockerfile: docker/gaia/Dockerfile
+    ports:
+      - "26656:26656"
+      - "26657:26657"
+      - "1317:1317"
+      - "9090:9090"
+      - "9091:9091"
+    command:
+      - sh
+      - -c
+      - |
+        gaiad init username --chain-id testhub
+        echo 'luggage rotate orient usage program cloud armed warrior rich erase acquire remember' | gaiad keys add username --recover --keyring-backend test
+        gaiad add-genesis-account cosmos14eadktsf4zzah6har7h7a46tunnj7rq7lmppy5 10000000000stake,1000000000000uatom
+        gaiad gentx username 10000000000stake --chain-id testhub --keyring-backend test
+        gaiad collect-gentxs
+        gaiad start --rpc.laddr tcp://0.0.0.0:26657

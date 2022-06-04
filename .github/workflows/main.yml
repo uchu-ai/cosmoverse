@@ -23,5 +23,11 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby }}
         bundler-cache: true
+    - uses: satackey/action-docker-layer-caching@v0.0.11
+      continue-on-error: true
+    - name: Start Cosmos test node
+      run: docker-compose up --detach --build
+    - name: Wait for Cosmos
+      run: sleep 10
     - name: Run the default task
       run: bundle exec rake
