@@ -27,7 +27,7 @@ jobs:
       continue-on-error: true
     - name: Start Cosmos test node
       run: docker-compose up --detach --build
-    - name: Wait for Cosmos
-      run: sleep 10
+    - name: Wait for next block
+      run: docker-compose exec -T gaia wait_for_next_block
     - name: Run the default task
       run: bundle exec rake

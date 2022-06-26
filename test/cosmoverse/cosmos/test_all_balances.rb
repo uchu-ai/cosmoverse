@@ -6,21 +6,25 @@ module Cosmoverse
   module Cosmos
     class TestAllBalances < Minitest::Test
       def test_connection_to_local_test_grpc_endpoint
-        address = "cosmos14eadktsf4zzah6har7h7a46tunnj7rq7lmppy5"
+        address = GaiaTestHelper.generate_address
+        GaiaTestHelper.send_tokens(address:, amount: "123uatom")
+        GaiaTestHelper.wait_for_next_block
 
         all_balances = Cosmoverse::Cosmos.all_balances(address, rpc_host: "localhost:9090")
                                          .balances.map { |balance| { denom: balance.denom, amount: balance.amount } }
 
-        assert_equal([{ denom: "uatom", amount: "1000000000000" }], all_balances)
+        assert_equal([{ denom: "uatom", amount: "123" }], all_balances)
       end
 
       def test_connection_to_local_test_rpc_endpoint
-        address = "cosmos14eadktsf4zzah6har7h7a46tunnj7rq7lmppy5"
+        address = GaiaTestHelper.generate_address
+        GaiaTestHelper.send_tokens(address:, amount: "321uatom")
+        GaiaTestHelper.wait_for_next_block
 
         all_balances = Cosmoverse::Cosmos.all_balances(address, tendermint_rpc_host: "http://localhost:26657")
                                          .balances.map { |balance| { denom: balance.denom, amount: balance.amount } }
 
-        assert_equal([{ denom: "uatom", amount: "1000000000000" }], all_balances)
+        assert_equal([{ denom: "uatom", amount: "321" }], all_balances)
       end
 
       def test_default_connection_to_public_rpc_endpoint

@@ -47,6 +47,7 @@ bin/generate_protos
 - Create presenters for RPC responses.
 - Use POST for JSON::PRC requests.
 - Test helper to send transactions with gaiad and wait for next block.
+
 - Find out about gRPC/JSON::RPC authentication and apply it.
 
 ```

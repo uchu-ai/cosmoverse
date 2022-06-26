@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -e
+
+CURRENT_HEIGHT="$( gaiad query block | jq '.block.header.height' )"
+
+while [ "$CURRENT_HEIGHT" == "$( gaiad query block | jq '.block.header.height' )" ]; do
+  echo '... waiting for next block'
+  sleep 1
+done
