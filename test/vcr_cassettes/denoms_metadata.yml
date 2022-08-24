@@ -1,0 +1,52 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://rpc.cosmos.network/abci_query?data=%22%22&path=%22/cosmos.bank.v1beta1.Query/DenomsMetadata%22
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - rpc.cosmos.network
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '417'
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 23 Aug 2022 04:59:22 GMT
+      X-Server-Time:
+      - '1661230762'
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "jsonrpc": "2.0",
+          "id": -1,
+          "result": {
+            "response": {
+              "code": 0,
+              "log": "",
+              "info": "",
+              "index": "0",
+              "key": null,
+              "value": "Cm4KK1RoZSBuYXRpdmUgc3Rha2luZyB0b2tlbiBvZiB0aGUgQ29zbW9zIEh1Yi4SEgoFdWF0b20aCW1pY3JvYXRvbRIUCgVtYXRvbRADGgltaWxsaWF0b20SCAoEYXRvbRAGGgV1YXRvbSIEYXRvbRICEAE=",
+              "proofOps": null,
+              "height": "11763860",
+              "codespace": ""
+            }
+          }
+        }
+  recorded_at: Tue, 23 Aug 2022 04:59:22 GMT
+recorded_with: VCR 6.1.0
