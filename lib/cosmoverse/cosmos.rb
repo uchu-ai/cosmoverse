@@ -4,7 +4,23 @@ require "cosmoverse/proto/cosmos/bank/v1beta1/query_services_pb"
 
 module Cosmoverse
   module Cosmos
-    # rubocop:disable Metrics/AbcSize
+    def self.json_rpc_client(path:, proto:, host: "https://rpc.cosmos.network")
+      uri = URI("#{host}/abci_query")
+      params = { path: "\"#{path}\"",
+                 data: "\"#{proto.gsub("\n", '\n')}\"" }
+
+      uri.query = URI.encode_www_form(params)
+      request = Net::HTTP.get_response(uri)
+
+      raise "Request was not successful #{request}" unless request.is_a?(Net::HTTPSuccess)
+
+      rpc_response = JSON.parse(request.body)
+
+      raise "RPC request was not successful #{rpc_response}" unless rpc_response.key?("result")
+
+      Base64.decode64(rpc_response.fetch("result").fetch("response").fetch("value"))
+    end
+
     # rubocop:disable Metrics/MethodLength
     def self.all_balances(address, tendermint_rpc_host: "https://rpc.cosmos.network", rpc_host: nil)
       request = Cosmoverse::Proto::Cosmos::Bank::V1beta1::QueryAllBalancesRequest.new(address:)
@@ -19,71 +35,38 @@ module Cosmoverse
         raise "gRPC was not successful. The response is a #{grpc_response}"
       end
 
-      uri = URI("#{tendermint_rpc_host}/abci_query")
-      params = { path: '"/cosmos.bank.v1beta1.Query/AllBalances"',
-                 data: "\"#{request.to_proto.gsub("\n", '\n')}\"" }
-      uri.query = URI.encode_www_form(params)
-      request = Net::HTTP.get_response(uri)
-
-      raise "Request was not successful #{request}" unless request.is_a?(Net::HTTPSuccess)
-
-      rpc_response = JSON.parse(request.body)
-
-      raise "RPC request was not successful #{rpc_response}" unless rpc_response.key?("result")
-
-      value = Base64.decode64(rpc_response.fetch("result").fetch("response").fetch("value"))
+      value = json_rpc_client(
+        path: "/cosmos.bank.v1beta1.Query/AllBalances",
+        proto: request.to_proto,
+        host: tendermint_rpc_host
+      )
 
       Cosmoverse::Proto::Cosmos::Bank::V1beta1::QueryAllBalancesResponse.decode(value)
     end
-    # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/MethodLength
 
-    # rubocop:disable Metrics/AbcSize
-    # rubocop:disable Metrics/MethodLength
     def self.total_supply(tendermint_rpc_host: "https://rpc.cosmos.network")
       request = Cosmoverse::Proto::Cosmos::Bank::V1beta1::QueryAllBalancesRequest.new
 
-      uri = URI("#{tendermint_rpc_host}/abci_query")
-      params = { path: '"/cosmos.bank.v1beta1.Query/TotalSupply"',
-                 data: "\"#{request.to_proto.gsub("\n", '\n')}\"" }
-      uri.query = URI.encode_www_form(params)
-      request = Net::HTTP.get_response(uri)
-
-      raise "Request was not successful #{request}" unless request.is_a?(Net::HTTPSuccess)
-
-      rpc_response = JSON.parse(request.body)
-
-      raise "RPC request was not successful #{rpc_response}" unless rpc_response.key?("result")
-
-      value = Base64.decode64(rpc_response.fetch("result").fetch("response").fetch("value"))
+      value = json_rpc_client(
+        path: "/cosmos.bank.v1beta1.Query/TotalSupply",
+        proto: request.to_proto,
+        host: tendermint_rpc_host
+      )
 
       Cosmoverse::Proto::Cosmos::Bank::V1beta1::QueryTotalSupplyResponse.decode(value)
     end
-    # rubocop:enable Metrics/AbcSize
-    # rubocop:enable Metrics/MethodLength
 
-    # rubocop:disable Metrics/AbcSize
-    # rubocop:disable Metrics/MethodLength
     def self.denoms_metadata(tendermint_rpc_host: "https://rpc.cosmos.network")
       request = Cosmoverse::Proto::Cosmos::Bank::V1beta1::QueryDenomsMetadataRequest.new
 
-      uri = URI("#{tendermint_rpc_host}/abci_query")
-      params = { path: '"/cosmos.bank.v1beta1.Query/DenomsMetadata"',
-                 data: "\"#{request.to_proto.gsub("\n", '\n')}\"" }
-      uri.query = URI.encode_www_form(params)
-      request = Net::HTTP.get_response(uri)
-
-      raise "Request was not successful #{request}" unless request.is_a?(Net::HTTPSuccess)
-
-      rpc_response = JSON.parse(request.body)
-
-      raise "RPC request was not successful #{rpc_response}" unless rpc_response.key?("result")
-
-      value = Base64.decode64(rpc_response.fetch("result").fetch("response").fetch("value"))
+      value = json_rpc_client(
+        path: "/cosmos.bank.v1beta1.Query/DenomsMetadata",
+        proto: request.to_proto,
+        host: tendermint_rpc_host
+      )
 
       Cosmoverse::Proto::Cosmos::Bank::V1beta1::QueryDenomsMetadataResponse.decode(value)
     end
-    # rubocop:enable Metrics/AbcSize
-    # rubocop:enable Metrics/MethodLength
   end
 end
