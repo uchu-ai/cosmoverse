@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
+require "cosmoverse/cosmos/config"
 require "cosmoverse/proto/cosmos/bank/v1beta1/query_services_pb"
 
 module Cosmoverse
   module Cosmos
-    def self.json_rpc_client(path:, proto:, host: "https://rpc.cosmos.network")
-      uri = URI("#{host}/abci_query")
+    # rubocop:disable Metrics/AbcSize
+    def self.json_rpc_client(path:, proto:)
+      uri = URI("#{config.tendermint_host}/abci_query")
       params = { path: "\"#{path}\"",
                  data: "\"#{proto.gsub("\n", '\n')}\"" }
 
@@ -20,9 +22,10 @@ module Cosmoverse
 
       Base64.decode64(rpc_response.fetch("result").fetch("response").fetch("value"))
     end
+    # rubocop:enable Metrics/AbcSize
 
     # rubocop:disable Metrics/MethodLength
-    def self.all_balances(address, tendermint_rpc_host: "https://rpc.cosmos.network", rpc_host: nil)
+    def self.all_balances(address, rpc_host: nil)
       request = Cosmoverse::Proto::Cosmos::Bank::V1beta1::QueryAllBalancesRequest.new(address:)
 
       if rpc_host
@@ -37,33 +40,30 @@ module Cosmoverse
 
       value = json_rpc_client(
         path: "/cosmos.bank.v1beta1.Query/AllBalances",
-        proto: request.to_proto,
-        host: tendermint_rpc_host
+        proto: request.to_proto
       )
 
       Cosmoverse::Proto::Cosmos::Bank::V1beta1::QueryAllBalancesResponse.decode(value)
     end
     # rubocop:enable Metrics/MethodLength
 
-    def self.total_supply(tendermint_rpc_host: "https://rpc.cosmos.network")
+    def self.total_supply
       request = Cosmoverse::Proto::Cosmos::Bank::V1beta1::QueryAllBalancesRequest.new
 
       value = json_rpc_client(
         path: "/cosmos.bank.v1beta1.Query/TotalSupply",
-        proto: request.to_proto,
-        host: tendermint_rpc_host
+        proto: request.to_proto
       )
 
       Cosmoverse::Proto::Cosmos::Bank::V1beta1::QueryTotalSupplyResponse.decode(value)
     end
 
-    def self.denoms_metadata(tendermint_rpc_host: "https://rpc.cosmos.network")
+    def self.denoms_metadata
       request = Cosmoverse::Proto::Cosmos::Bank::V1beta1::QueryDenomsMetadataRequest.new
 
       value = json_rpc_client(
         path: "/cosmos.bank.v1beta1.Query/DenomsMetadata",
-        proto: request.to_proto,
-        host: tendermint_rpc_host
+        proto: request.to_proto
       )
 
       Cosmoverse::Proto::Cosmos::Bank::V1beta1::QueryDenomsMetadataResponse.decode(value)

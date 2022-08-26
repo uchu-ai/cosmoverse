@@ -7,7 +7,9 @@ module Cosmoverse
     class TestDenomsMetadata < Minitest::Test
       def test_demons_metadata
         denoms_metadata = VCR.use_cassette("denoms_metadata") do
-          Cosmoverse::Cosmos.denoms_metadata.metadatas.map(&:to_h)
+          Cosmoverse::Cosmos.config.stub :tendermint_host, "https://rpc.cosmos.network" do
+            Cosmoverse::Cosmos.denoms_metadata.metadatas.map(&:to_h)
+          end
         end
 
         assert_equal([

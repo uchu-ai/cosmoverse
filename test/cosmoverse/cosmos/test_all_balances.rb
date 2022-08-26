@@ -21,7 +21,7 @@ module Cosmoverse
         GaiaTestHelper.send_tokens(address:, amount: "321uatom")
         GaiaTestHelper.wait_for_next_block
 
-        all_balances = Cosmoverse::Cosmos.all_balances(address, tendermint_rpc_host: "http://localhost:26657")
+        all_balances = Cosmoverse::Cosmos.all_balances(address)
                                          .balances.map { |balance| { denom: balance.denom, amount: balance.amount } }
 
         assert_equal([{ denom: "uatom", amount: "321" }], all_balances)
@@ -55,11 +55,13 @@ module Cosmoverse
 
         address = "cosmos111111111111111111111111111111111111111"
 
-        all_balances = Cosmoverse::Cosmos.all_balances(address).balances.map do |balance|
-          { denom: balance.denom, amount: balance.amount }
-        end
+        Cosmoverse::Cosmos.config.stub :tendermint_host, "https://rpc.cosmos.network" do
+          all_balances = Cosmoverse::Cosmos.all_balances(address).balances.map do |balance|
+            { denom: balance.denom, amount: balance.amount }
+          end
 
-        assert_equal([{ denom: "uatom", amount: "2488639" }], all_balances)
+          assert_equal([{ denom: "uatom", amount: "2488639" }], all_balances)
+        end
       end
     end
   end
