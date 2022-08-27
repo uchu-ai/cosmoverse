@@ -5,8 +5,8 @@ require "net/http"
 require "base64"
 require "json"
 
-require_relative "cosmoverse/version"
-require_relative "cosmoverse/cosmos"
+require "cosmoverse/version"
+require "cosmoverse/cosmos"
 
 module Cosmoverse
   class Error < StandardError; end

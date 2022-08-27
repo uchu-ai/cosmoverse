@@ -43,11 +43,10 @@ bin/generate_protos
 
 ### TODO
 
-- Extract network clients for diffrent request.
+- ~~Extract network clients for diffrent request.~~
 - Create presenters for RPC responses.
 - Use POST for JSON::PRC requests.
 - Test helper to send transactions with gaiad and wait for next block.
-
 - Find out about gRPC/JSON::RPC authentication and apply it.
 - Lock protos to exact version of cosmos-sdk release.
 ```
