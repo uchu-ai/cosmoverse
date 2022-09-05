@@ -6,9 +6,15 @@ AllCops:
   TargetRubyVersion: 3.1
   NewCops: enable
 
+Style/HashSyntax:
+  Exclude:
+    - lib/cosmoverse/proto/**/*
+
 Style/StringLiterals:
   Enabled: true
   EnforcedStyle: double_quotes
+  Exclude:
+    - lib/cosmoverse/proto/**/*
 
 Style/StringLiteralsInInterpolation:
   Enabled: true

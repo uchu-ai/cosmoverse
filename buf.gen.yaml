@@ -1,0 +1,18 @@
+version: v1
+managed:
+  enabled: true
+  override:
+    RUBY_PACKAGE:
+      cosmos/bank/v1beta1/bank.proto: Cosmoverse::Proto::Cosmos::Bank::V1beta1::Bank
+      cosmos/bank/v1beta1/query.proto: Cosmoverse::Proto::Cosmos::Bank::V1beta1::Query
+      cosmos/base/query/v1beta1/pagination.proto: Cosmoverse::Proto::Cosmos::Base::Query::V1beta1::Pagination
+      cosmos/base/v1beta1/coin.proto: Cosmoverse::Proto::Cosmos::Base::V1beta1::Coin
+      cosmos/msg/v1/msg.proto: Cosmoverse::Proto::Cosmos::Msg::V1::Msg
+      cosmos/query/v1/query.proto: Cosmoverse::Proto::Cosmos::Query::V1::Query
+      gogoproto/gogo.proto: Cosmoverse::Proto::Gogoproto
+      cosmos_proto/cosmos.proto: Cosmoverse::Proto::CosmosProto
+plugins:
+  - remote: buf.build/protocolbuffers/plugins/ruby
+    out: lib/cosmoverse/proto
+  - remote: buf.build/grpc/plugins/ruby
+    out: lib/cosmoverse/proto
