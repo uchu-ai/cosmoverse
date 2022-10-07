@@ -9,6 +9,20 @@ managed:
       cosmos/base/v1beta1/coin.proto: Cosmoverse::Proto::Cosmos::Base::V1beta1::Coin
       cosmos/msg/v1/msg.proto: Cosmoverse::Proto::Cosmos::Msg::V1::Msg
       cosmos/query/v1/query.proto: Cosmoverse::Proto::Cosmos::Query::V1::Query
+      cosmos/tx/v1beta1/service.proto: Cosmoverse::Proto::Cosmos::Tx::V1beta1::Service
+      cosmos/tx/v1beta1/tx.proto: Cosmoverse::Proto::Cosmos::Tx::V1beta1::Tx
+      cosmos/tx/signing/v1beta1/signing.proto: Cosmoverse::Proto::Cosmos::Tx::Signing::V1beta1::Signing
+      cosmos/base/abci/v1beta1/abci.proto: Cosmoverse::Proto::Cosmos::Base::Abci::V1beta1::Abci
+      cosmos/crypto/multisig/v1beta1/multisig.proto: Cosmoverse::Proto::Cosmos::Crypto::Multisig::V1beta1::Multisig
+      tendermint/abci/types.proto: Cosmoverse::Proto::Tendermint::Abci::Types
+      tendermint/crypto/proof.proto: Cosmoverse::Proto::Tendermint::Crypto::Proof
+      tendermint/crypto/keys.proto: Cosmoverse::Proto::Tendermint::Crypto::Keys
+      tendermint/types/types.proto: Cosmoverse::Proto::Tendermint::Types::Types
+      tendermint/types/params.proto: Cosmoverse::Proto::Tendermint::Types::Params
+      tendermint/types/validator.proto: Cosmoverse::Proto::Tendermint::Types::Validator
+      tendermint/types/block.proto: Cosmoverse::Proto::Tendermint::Types::Block
+      tendermint/types/evidence.proto: Cosmoverse::Proto::Tendermint::Types::Evidence
+      tendermint/version/types.proto: Cosmoverse::Proto::Tendermint::Version::Types
       gogoproto/gogo.proto: Cosmoverse::Proto::Gogoproto
       cosmos_proto/cosmos.proto: Cosmoverse::Proto::CosmosProto
 plugins:

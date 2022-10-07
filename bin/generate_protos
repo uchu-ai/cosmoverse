@@ -17,11 +17,26 @@ buf generate buf.build/cosmos/cosmos-sdk --path cosmos/bank/v1beta1/bank.proto \
                                          --path cosmos/base/query/v1beta1/pagination.proto \
                                          --path cosmos/base/v1beta1/coin.proto \
                                          --path cosmos/msg/v1/msg.proto \
-                                         --path cosmos/query/v1/query.proto
+                                         --path cosmos/query/v1/query.proto \
+                                         --path cosmos/tx/v1beta1/service.proto \
+                                         --path cosmos/tx/v1beta1/tx.proto \
+                                         --path cosmos/tx/signing/v1beta1/signing.proto \
+                                         --path cosmos/base/abci/v1beta1/abci.proto \
+                                         --path cosmos/crypto/multisig/v1beta1/multisig.proto \
+                                         --path tendermint/abci/types.proto \
+                                         --path tendermint/crypto/proof.proto \
+                                         --path tendermint/crypto/keys.proto \
+                                         --path tendermint/version/types.proto \
+                                         --path tendermint/types/validator.proto \
+                                         --path tendermint/types/types.proto \
+                                         --path tendermint/types/params.proto \
+                                         --path tendermint/types/block.proto \
+                                         --path tendermint/types/evidence.proto
 buf generate buf.build/cosmos/cosmos-proto
 buf generate buf.build/cosmos/gogo-proto
 
 find lib/cosmoverse/proto/ -type f -exec $SED -i "s/^require 'cosmos/require 'cosmoverse\/proto\/cosmos/g" {} \;
+find lib/cosmoverse/proto/ -type f -exec $SED -i "s/^require 'tendermint/require 'cosmoverse\/proto\/tendermint/g" {} \;
 find lib/cosmoverse/proto/ -type f -exec $SED -i "s/^require 'gogoproto/require 'cosmoverse\/proto\/gogoproto/g" {} \;
 
 bundle exec rubocop -A lib/cosmoverse/proto/

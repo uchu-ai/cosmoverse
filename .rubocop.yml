@@ -40,3 +40,7 @@ Metrics/MethodLength:
 
 Style/Documentation:
   Enabled: false
+
+Naming/VariableNumber:
+  Exclude:
+    - lib/cosmoverse/proto/**/*

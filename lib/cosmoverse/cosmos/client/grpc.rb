@@ -26,16 +26,20 @@ module Cosmoverse
         end
 
         def stub
-          names = request.class.name.split("::")
-          names[-1] = names[-1].split(/(?=[A-Z])/).first
-          Object.const_get("#{names.join("::")}::Stub").new(
+          names = request.class.name.split("::")[0..3] - ["Proto"] + ["SERVICE"]
+          Object.const_get("#{Object.const_get(names.join("::")).name}::Stub").new(
             "#{Cosmoverse::Cosmos.config.grpc_host}:#{Cosmoverse::Cosmos.config.grpc_port}",
             :this_channel_is_insecure
           )
         end
 
         def request_method
-          request.class.name.split("::").last.split(/(?=[A-Z])/)[1..-2].map(&:downcase).join("_")
+          klass = request.class.name.split("::").last.split(/(?=[A-Z])/)
+
+          method = klass[1..-2].map(&:downcase).join("_")
+          return method if stub.respond_to?(method)
+
+          klass[0..-2].map(&:downcase).join("_")
         end
 
         attr_reader :request
