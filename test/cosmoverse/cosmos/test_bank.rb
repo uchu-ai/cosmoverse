@@ -6,12 +6,12 @@ module Cosmoverse
   module Cosmos
     class TestBank < Minitest::Test
       def test_all_balances
-        address = GaiaTestHelper.generate_address
-        GaiaTestHelper.send_tokens(address:, amount: "123uatom")
+        wallet = GaiaTestHelper.generate_wallet
+        GaiaTestHelper.send_tokens(to_wallet: wallet, amount: "123uatom")
         GaiaTestHelper.wait_for_next_block
 
         all_balances =
-          Cosmoverse::Cosmos::Bank.all_balances(address)
+          Cosmoverse::Cosmos::Bank.all_balances(wallet.address)
                                   .balances.map { |balance| { denom: balance.denom, amount: balance.amount } }
 
         assert_equal([{ denom: "uatom", amount: "123" }], all_balances)
