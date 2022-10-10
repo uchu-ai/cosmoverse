@@ -11,6 +11,13 @@ module Cosmoverse
 
       TransferEvent = Struct.new("TransferEvent", :recipient, :sender, :amount)
 
+      def self.get_tx(hash)
+        request = Cosmoverse::Proto::Cosmos::Tx::V1beta1::Service::GetTxRequest.new(hash:)
+        response = Cosmoverse::Cosmos::Client.call(request)
+
+        new(response.tx_response)
+      end
+
       def self.received_txs(address)
         events = ["transfer.recipient='#{address}'"]
 
