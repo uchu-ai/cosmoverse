@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "securerandom"
+
 module GaiaTestHelper
   TesterWallet = Struct.new("TesterWallet", :address, :name)
   TesterTx = Struct.new("TesterTx", :tx_hash)
@@ -9,7 +11,7 @@ module GaiaTestHelper
   end
 
   def self.generate_wallet
-    random = (0...8).map { rand(65..90).chr }.join
+    random = SecureRandom.hex
 
     response =
       `docker-compose exec -T gaia gaiad keys add tester-#{random} --keyring-backend test --output json 2>&1 | cat`
