@@ -30,4 +30,4 @@ jobs:
     - name: Wait for next block
       run: docker-compose exec -T gaia wait_for_next_block
     - name: Run the default task
-      run: bundle exec rake
+      run: CI=1 bundle exec rake
