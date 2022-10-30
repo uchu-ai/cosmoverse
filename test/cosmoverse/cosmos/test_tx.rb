@@ -35,7 +35,8 @@ module Cosmoverse
         txs =
           Cosmoverse::Cosmos::Tx.received_txs(to_wallet.address)
 
-        assert_equal(1, txs.size)
+        assert_instance_of(Tx::Collection, txs)
+        assert_equal(1, txs.count)
 
         event = Cosmoverse::Cosmos::Tx::TransferEvent.new(
           to_wallet.address,
@@ -61,7 +62,8 @@ module Cosmoverse
         txs =
           Cosmoverse::Cosmos::Tx.send_txs(from_wallet.address)
 
-        assert_equal(1, txs.size)
+        assert_instance_of(Tx::Collection, txs)
+        assert_equal(1, txs.count)
 
         event = Cosmoverse::Cosmos::Tx::TransferEvent.new(
           to_wallet.address,

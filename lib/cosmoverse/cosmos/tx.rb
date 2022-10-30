@@ -11,6 +11,14 @@ module Cosmoverse
 
       TransferEvent = Struct.new("TransferEvent", :recipient, :sender, :amount)
 
+      class Collection
+        include Cosmoverse::Cosmos::Collectable
+
+        def records
+          response.tx_responses.map { |txr| Tx.new(txr) }
+        end
+      end
+
       def self.get_tx(hash)
         request = Cosmoverse::Proto::Cosmos::Tx::V1beta1::Service::GetTxRequest.new(hash:)
         response = Cosmoverse::Cosmos::Client.call(request)
@@ -18,22 +26,18 @@ module Cosmoverse
         new(response.tx_response)
       end
 
-      def self.received_txs(address)
+      def self.received_txs(address, **args)
         events = ["transfer.recipient='#{address}'"]
 
         request = Cosmoverse::Proto::Cosmos::Tx::V1beta1::Service::GetTxsEventRequest.new(events:)
-        response = Cosmoverse::Cosmos::Client.call(request)
-
-        response.tx_responses.map { |txr| new(txr) }
+        Collection.new(request, **args)
       end
 
-      def self.send_txs(address)
+      def self.send_txs(address, **args)
         events = ["message.sender='#{address}'"]
 
         request = Cosmoverse::Proto::Cosmos::Tx::V1beta1::Service::GetTxsEventRequest.new(events:)
-        response = Cosmoverse::Cosmos::Client.call(request)
-
-        response.tx_responses.map { |txr| new(txr) }
+        Collection.new(request, **args)
       end
 
       def initialize(tx_response)
