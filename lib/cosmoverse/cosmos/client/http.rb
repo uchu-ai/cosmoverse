@@ -3,15 +3,7 @@
 module Cosmoverse
   module Cosmos
     module Client
-      class Http
-        def self.call(request)
-          new(request).call
-        end
-
-        def initialize(request)
-          @request = request
-        end
-
+      class Http < Base
         def call
           response = Net::HTTP.get_response(uri)
 
@@ -33,36 +25,13 @@ module Cosmoverse
           end
         end
 
-        def http_proto
-          request.to_proto.gsub("\n", '\n')
-        end
+        def http_proto = request.to_proto.gsub("\n", '\n')
 
-        def params
-          {
-            path: "\"#{path}\"",
-            data: "\"#{http_proto}\""
-          }
-        end
+        def path = "/#{service_class.service_name}/#{capitalized_request_method}"
 
-        def path
-          "/#{service_name}/#{request_method}"
-        end
+        def capitalized_request_method = request_method.to_s.split("_").map(&:capitalize).join
 
-        def service_name
-          names = request.class.name.split("::")
-          names[-1] = names[-1].split(/(?=[A-Z])/).first
-          Object.const_get("#{names.join("::")}::Service").service_name
-        end
-
-        def response_class
-          Object.const_get(request.class.name.sub(/Request\z/, "Response"))
-        end
-
-        def request_method
-          request.class.name.split("::").last.split(/(?=[A-Z])/)[1..-2].join
-        end
-
-        attr_reader :request
+        def params = { path: "\"#{path}\"", data: "\"#{http_proto}\"" }
       end
     end
   end

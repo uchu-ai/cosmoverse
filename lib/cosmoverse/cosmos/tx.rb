@@ -7,11 +7,16 @@ module Cosmoverse
     class Tx
       attr_reader :block_height, :tx_hash, :gas_wanted, :gas_used
 
-      SERVICE = Cosmoverse::Proto::Cosmos::Tx::V1beta1::Service::Service
+      RequestParamter = Struct.new("RequestParamter", :request, :request_method) do
+        def service_class
+          Cosmoverse::Proto::Cosmos::Tx::V1beta1::Service::Service::Service
+        end
+      end
 
       TransferEvent = Struct.new("TransferEvent", :recipient, :sender, :amount)
 
       class Collection
+        extend Cosmoverse::Cosmos::Collectable::Loadable
         include Cosmoverse::Cosmos::Collectable
 
         def records
@@ -21,23 +26,26 @@ module Cosmoverse
 
       def self.get_tx(hash)
         request = Cosmoverse::Proto::Cosmos::Tx::V1beta1::Service::GetTxRequest.new(hash:)
-        response = Cosmoverse::Cosmos::Client.call(request)
+        request_param = RequestParamter.new(request, :get_tx)
+        response = Cosmoverse::Cosmos::Client.call(request_param)
 
         new(response.tx_response)
       end
 
       def self.received_txs(address, **args)
         events = ["transfer.recipient='#{address}'"]
-
         request = Cosmoverse::Proto::Cosmos::Tx::V1beta1::Service::GetTxsEventRequest.new(events:)
-        Collection.new(request, **args)
+        request_param = RequestParamter.new(request, :get_txs_event)
+
+        Collection.get(request_param, **args)
       end
 
       def self.send_txs(address, **args)
         events = ["message.sender='#{address}'"]
-
         request = Cosmoverse::Proto::Cosmos::Tx::V1beta1::Service::GetTxsEventRequest.new(events:)
-        Collection.new(request, **args)
+        request_param = RequestParamter.new(request, :get_txs_event)
+
+        Collection.get(request_param, **args)
       end
 
       def initialize(tx_response)

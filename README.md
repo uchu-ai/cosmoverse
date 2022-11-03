@@ -49,6 +49,7 @@ bin/generate_protos
 - Test helper to send transactions with gaiad and wait for next block.
 - Find out about gRPC/JSON::RPC authentication and apply it.
 - Lock protos to exact version of cosmos-sdk release.
+- Error handling for bad requests `Cosmoverse::Cosmos::Tx.received_txs("address", limit: 3, offset: 4)`.
 ```
 https://grpc.io/docs/guides/auth/#with-server-authentication-ssltls-1
 ```
