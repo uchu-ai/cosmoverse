@@ -35,10 +35,13 @@ buf generate buf.build/cosmos/cosmos-sdk --path cosmos/bank/v1beta1/bank.proto \
                                          --path amino/amino.proto
 buf generate buf.build/cosmos/cosmos-proto
 buf generate buf.build/cosmos/gogo-proto
+buf generate buf.build/cosmos/ibc --path ibc/applications/transfer/v1/query.proto \
+                                  --path ibc/applications/transfer/v1/transfer.proto
 
 find lib/cosmoverse/proto/ -type f -exec $SED -i "s/^require 'cosmos/require 'cosmoverse\/proto\/cosmos/g" {} \;
 find lib/cosmoverse/proto/ -type f -exec $SED -i "s/^require 'tendermint/require 'cosmoverse\/proto\/tendermint/g" {} \;
 find lib/cosmoverse/proto/ -type f -exec $SED -i "s/^require 'gogoproto/require 'cosmoverse\/proto\/gogoproto/g" {} \;
 find lib/cosmoverse/proto/ -type f -exec $SED -i "s/^require 'amino/require 'cosmoverse\/proto\/amino/g" {} \;
+find lib/cosmoverse/proto/ -type f -exec $SED -i "s/^require 'ibc/require 'cosmoverse\/proto\/ibc/g" {} \;
 
 bundle exec rubocop -A lib/cosmoverse/proto/

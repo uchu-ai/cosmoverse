@@ -17,7 +17,6 @@ module Cosmoverse
 
           request = Minitest::Mock.new
           request.expect(:pagination=, nil, [pagination])
-          request.expect(:order_by=, nil, [:ORDER_BY_ASC])
 
           request_parameter_class = Struct.new(:request)
           request_parameter = request_parameter_class.new(request)
@@ -48,7 +47,6 @@ module Cosmoverse
 
           request = Minitest::Mock.new
           request.expect(:pagination=, nil, [pagination])
-          request.expect(:order_by=, nil, [:ORDER_BY_ASC])
 
           request_parameter_class = Struct.new(:request)
           request_parameter = request_parameter_class.new(request)

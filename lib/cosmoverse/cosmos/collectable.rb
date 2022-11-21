@@ -7,7 +7,6 @@ module Cosmoverse
         def get(request_parameter, limit: 0, offset: 0)
           request_parameter.request.pagination =
             Cosmoverse::Proto::Cosmos::Base::Query::V1beta1::Pagination::PageRequest.new(limit:, offset:)
-          request_parameter.request.order_by = :ORDER_BY_ASC
           response = Cosmoverse::Cosmos::Client.call(request_parameter)
           new(request_parameter:, response:)
         end

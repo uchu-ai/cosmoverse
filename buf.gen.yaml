@@ -26,6 +26,8 @@ managed:
       tendermint/version/types.proto: Cosmoverse::Proto::Tendermint::Version::Types
       gogoproto/gogo.proto: Cosmoverse::Proto::Gogoproto
       cosmos_proto/cosmos.proto: Cosmoverse::Proto::CosmosProto
+      ibc/applications/transfer/v1/query.proto: Cosmoverse::Proto::Ibc::Applications::Transfer::V1
+      ibc/applications/transfer/v1/transfer.proto: Cosmoverse::Proto::Ibc::Applications::Transfer::V1
 plugins:
   - remote: buf.build/protocolbuffers/plugins/ruby
     out: lib/cosmoverse/proto

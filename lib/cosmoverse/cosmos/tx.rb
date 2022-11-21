@@ -5,9 +5,11 @@ require "cosmoverse/proto/cosmos/tx/v1beta1/service_services_pb"
 module Cosmoverse
   module Cosmos
     class Tx
+      DEFAULT_ORDER = :ORDER_BY_ASC
+
       attr_reader :block_height, :tx_hash, :gas_wanted, :gas_used
 
-      RequestParamter = Struct.new("RequestParamter", :request, :request_method) do
+      RequestParamter = Struct.new("TxRequestParamter", :request, :request_method) do
         def service_class
           Cosmoverse::Proto::Cosmos::Tx::V1beta1::Service::Service::Service
         end
@@ -34,7 +36,8 @@ module Cosmoverse
 
       def self.received_txs(address, **args)
         events = ["transfer.recipient='#{address}'"]
-        request = Cosmoverse::Proto::Cosmos::Tx::V1beta1::Service::GetTxsEventRequest.new(events:)
+        request = Cosmoverse::Proto::Cosmos::Tx::V1beta1::Service::GetTxsEventRequest.new(events:,
+                                                                                          order_by: DEFAULT_ORDER)
         request_param = RequestParamter.new(request, :get_txs_event)
 
         Collection.get(request_param, **args)
@@ -42,7 +45,8 @@ module Cosmoverse
 
       def self.send_txs(address, **args)
         events = ["message.sender='#{address}'"]
-        request = Cosmoverse::Proto::Cosmos::Tx::V1beta1::Service::GetTxsEventRequest.new(events:)
+        request = Cosmoverse::Proto::Cosmos::Tx::V1beta1::Service::GetTxsEventRequest.new(events:,
+                                                                                          order_by: DEFAULT_ORDER)
         request_param = RequestParamter.new(request, :get_txs_event)
 
         Collection.get(request_param, **args)

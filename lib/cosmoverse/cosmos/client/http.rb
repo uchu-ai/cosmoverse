@@ -31,7 +31,13 @@ module Cosmoverse
 
         def capitalized_request_method = request_method.to_s.split("_").map(&:capitalize).join
 
-        def params = { path: "\"#{path}\"", data: "\"#{http_proto}\"" }
+        def params
+          # HACK: Empty proto requests cause errors. Data is not added in that
+          # case.
+          return { path: "\"#{path}\"" } if http_proto == "\\n\x00"
+
+          { path: "\"#{path}\"", data: "\"#{http_proto}\"" }
+        end
       end
     end
   end

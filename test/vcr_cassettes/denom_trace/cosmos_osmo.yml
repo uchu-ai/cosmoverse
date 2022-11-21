@@ -1,0 +1,52 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://rpc.cosmos.network/abci_query?data=%22%5Cn@14F9BC3E44B8A9C1BE1FB08980FAB87034C9905EF17CF2F5008FC085218811CC%22&path=%22/ibc.applications.transfer.v1.Query/DenomTrace%22
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - rpc.cosmos.network
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '305'
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 21 Nov 2022 04:49:04 GMT
+      X-Server-Time:
+      - '1669006144'
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "jsonrpc": "2.0",
+          "id": -1,
+          "result": {
+            "response": {
+              "code": 0,
+              "log": "",
+              "info": "",
+              "index": "0",
+              "key": null,
+              "value": "Ch0KFHRyYW5zZmVyL2NoYW5uZWwtMTQxEgV1b3Ntbw==",
+              "proofOps": null,
+              "height": "12929526",
+              "codespace": ""
+            }
+          }
+        }
+  recorded_at: Mon, 21 Nov 2022 04:49:04 GMT
+recorded_with: VCR 6.1.0
