@@ -33,6 +33,14 @@ module Cosmoverse
                 #
                 # Since: cosmos-sdk 0.45.2
                 rpc :GetBlockWithTxs, ::Cosmoverse::Proto::Cosmos::Tx::V1beta1::Service::GetBlockWithTxsRequest, ::Cosmoverse::Proto::Cosmos::Tx::V1beta1::Service::GetBlockWithTxsResponse
+                # TxDecode decodes the transaction.
+                #
+                # Since: cosmos-sdk 0.47
+                rpc :TxDecode, ::Cosmoverse::Proto::Cosmos::Tx::V1beta1::Service::TxDecodeRequest, ::Cosmoverse::Proto::Cosmos::Tx::V1beta1::Service::TxDecodeResponse
+                # TxEncode encodes the transaction.
+                #
+                # Since: cosmos-sdk 0.47
+                rpc :TxEncode, ::Cosmoverse::Proto::Cosmos::Tx::V1beta1::Service::TxEncodeRequest, ::Cosmoverse::Proto::Cosmos::Tx::V1beta1::Service::TxEncodeResponse
               end
 
               Stub = Service.rpc_stub_class

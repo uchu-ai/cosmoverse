@@ -3,6 +3,7 @@ managed:
   enabled: true
   override:
     RUBY_PACKAGE:
+      amino/amino.proto: Cosmoverse::Proto::Amino
       cosmos/bank/v1beta1/bank.proto: Cosmoverse::Proto::Cosmos::Bank::V1beta1::Bank
       cosmos/bank/v1beta1/query.proto: Cosmoverse::Proto::Cosmos::Bank::V1beta1::Query
       cosmos/base/query/v1beta1/pagination.proto: Cosmoverse::Proto::Cosmos::Base::Query::V1beta1::Pagination

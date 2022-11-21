@@ -31,12 +31,14 @@ buf generate buf.build/cosmos/cosmos-sdk --path cosmos/bank/v1beta1/bank.proto \
                                          --path tendermint/types/types.proto \
                                          --path tendermint/types/params.proto \
                                          --path tendermint/types/block.proto \
-                                         --path tendermint/types/evidence.proto
+                                         --path tendermint/types/evidence.proto \
+                                         --path amino/amino.proto
 buf generate buf.build/cosmos/cosmos-proto
 buf generate buf.build/cosmos/gogo-proto
 
 find lib/cosmoverse/proto/ -type f -exec $SED -i "s/^require 'cosmos/require 'cosmoverse\/proto\/cosmos/g" {} \;
 find lib/cosmoverse/proto/ -type f -exec $SED -i "s/^require 'tendermint/require 'cosmoverse\/proto\/tendermint/g" {} \;
 find lib/cosmoverse/proto/ -type f -exec $SED -i "s/^require 'gogoproto/require 'cosmoverse\/proto\/gogoproto/g" {} \;
+find lib/cosmoverse/proto/ -type f -exec $SED -i "s/^require 'amino/require 'cosmoverse\/proto\/amino/g" {} \;
 
 bundle exec rubocop -A lib/cosmoverse/proto/

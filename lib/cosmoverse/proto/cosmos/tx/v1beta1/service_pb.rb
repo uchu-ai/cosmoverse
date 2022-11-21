@@ -59,6 +59,18 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :block, :message, 3, "tendermint.types.Block", json_name: "block"
       optional :pagination, :message, 4, "cosmos.base.query.v1beta1.PageResponse", json_name: "pagination"
     end
+    add_message "cosmos.tx.v1beta1.TxDecodeRequest" do
+      optional :tx_bytes, :bytes, 1, json_name: "txBytes"
+    end
+    add_message "cosmos.tx.v1beta1.TxDecodeResponse" do
+      optional :tx, :message, 1, "cosmos.tx.v1beta1.Tx", json_name: "tx"
+    end
+    add_message "cosmos.tx.v1beta1.TxEncodeRequest" do
+      optional :tx, :message, 1, "cosmos.tx.v1beta1.Tx", json_name: "tx"
+    end
+    add_message "cosmos.tx.v1beta1.TxEncodeResponse" do
+      optional :tx_bytes, :bytes, 1, json_name: "txBytes"
+    end
     add_enum "cosmos.tx.v1beta1.OrderBy" do
       value :ORDER_BY_UNSPECIFIED, 0
       value :ORDER_BY_ASC, 1
@@ -89,6 +101,10 @@ module Cosmoverse
             GetTxResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("cosmos.tx.v1beta1.GetTxResponse").msgclass
             GetBlockWithTxsRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("cosmos.tx.v1beta1.GetBlockWithTxsRequest").msgclass
             GetBlockWithTxsResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("cosmos.tx.v1beta1.GetBlockWithTxsResponse").msgclass
+            TxDecodeRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("cosmos.tx.v1beta1.TxDecodeRequest").msgclass
+            TxDecodeResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("cosmos.tx.v1beta1.TxDecodeResponse").msgclass
+            TxEncodeRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("cosmos.tx.v1beta1.TxEncodeRequest").msgclass
+            TxEncodeResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("cosmos.tx.v1beta1.TxEncodeResponse").msgclass
             OrderBy = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("cosmos.tx.v1beta1.OrderBy").enummodule
             BroadcastMode = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("cosmos.tx.v1beta1.BroadcastMode").enummodule
           end

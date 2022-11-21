@@ -12,6 +12,7 @@ require 'cosmoverse/proto/cosmos/base/v1beta1/coin_pb'
 require 'cosmoverse/proto/cosmos/bank/v1beta1/bank_pb'
 require 'cosmoverse/proto/cosmos_proto/cosmos_pb'
 require 'cosmoverse/proto/cosmos/query/v1/query_pb'
+require 'cosmoverse/proto/amino/amino_pb'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_file("cosmos/bank/v1beta1/query.proto", :syntax => :proto3) do
