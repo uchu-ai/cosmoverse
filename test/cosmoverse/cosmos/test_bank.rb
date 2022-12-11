@@ -24,11 +24,9 @@ module Cosmoverse
       end
 
       def test_denoms_meta
-        denoms_metadata = VCR.use_cassette("denoms_metadata") do
-          Cosmoverse::Cosmos.config.stub :tendermint_host, "https://rpc.cosmos.network" do
-            Cosmoverse::Cosmos.config.stub :mode, :http do
-              Cosmoverse::Cosmos::Bank.denoms_metadata.metadatas.map(&:to_h)
-            end
+        denoms_metadata = Cosmoverse::Cosmos.config.stub :tendermint_host, "https://rpc.cosmos.network" do
+          Cosmoverse::Cosmos.config.stub :mode, :http do
+            Cosmoverse::Cosmos::Bank.denoms_metadata.metadatas.map(&:to_h)
           end
         end
 

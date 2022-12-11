@@ -9,11 +9,9 @@ module Cosmoverse
         def test_get
           ibc_denom = "ibc/14F9BC3E44B8A9C1BE1FB08980FAB87034C9905EF17CF2F5008FC085218811CC"
 
-          denom_trace = VCR.use_cassette("denom_trace/cosmos_osmo") do
-            Cosmoverse::Cosmos.config.stub :tendermint_host, "https://rpc.cosmos.network" do
-              Cosmoverse::Cosmos.config.stub :mode, :http do
-                Cosmoverse::Cosmos::Ibc::DenomTrace.get(ibc_denom)
-              end
+          denom_trace = Cosmoverse::Cosmos.config.stub :tendermint_host, "https://rpc.cosmos.network" do
+            Cosmoverse::Cosmos.config.stub :mode, :http do
+              Cosmoverse::Cosmos::Ibc::DenomTrace.get(ibc_denom)
             end
           end
 
