@@ -7,6 +7,7 @@ require 'google/protobuf'
 
 require 'cosmoverse/proto/gogoproto/gogo_pb'
 require 'cosmoverse/proto/tendermint/abci/types_pb'
+require 'cosmoverse/proto/tendermint/types/block_pb'
 require 'google/protobuf/any_pb'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do
@@ -69,6 +70,14 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :limit, :uint64, 5, json_name: "limit"
       repeated :txs, :message, 6, "cosmos.base.abci.v1beta1.TxResponse", json_name: "txs"
     end
+    add_message "cosmos.base.abci.v1beta1.SearchBlocksResult" do
+      optional :total_count, :int64, 1, json_name: "totalCount"
+      optional :count, :int64, 2, json_name: "count"
+      optional :page_number, :int64, 3, json_name: "pageNumber"
+      optional :page_total, :int64, 4, json_name: "pageTotal"
+      optional :limit, :int64, 5, json_name: "limit"
+      repeated :blocks, :message, 6, "tendermint.types.Block", json_name: "blocks"
+    end
   end
 end
 
@@ -89,6 +98,7 @@ module Cosmoverse
               MsgData = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("cosmos.base.abci.v1beta1.MsgData").msgclass
               TxMsgData = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("cosmos.base.abci.v1beta1.TxMsgData").msgclass
               SearchTxsResult = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("cosmos.base.abci.v1beta1.SearchTxsResult").msgclass
+              SearchBlocksResult = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("cosmos.base.abci.v1beta1.SearchBlocksResult").msgclass
             end
           end
         end

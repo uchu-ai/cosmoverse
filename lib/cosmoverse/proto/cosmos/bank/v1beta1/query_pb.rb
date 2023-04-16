@@ -26,6 +26,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     add_message "cosmos.bank.v1beta1.QueryAllBalancesRequest" do
       optional :address, :string, 1, json_name: "address"
       optional :pagination, :message, 2, "cosmos.base.query.v1beta1.PageRequest", json_name: "pagination"
+      optional :resolve_denom, :bool, 3, json_name: "resolveDenom"
     end
     add_message "cosmos.bank.v1beta1.QueryAllBalancesResponse" do
       repeated :balances, :message, 1, "cosmos.base.v1beta1.Coin", json_name: "balances"
@@ -38,6 +39,13 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     add_message "cosmos.bank.v1beta1.QuerySpendableBalancesResponse" do
       repeated :balances, :message, 1, "cosmos.base.v1beta1.Coin", json_name: "balances"
       optional :pagination, :message, 2, "cosmos.base.query.v1beta1.PageResponse", json_name: "pagination"
+    end
+    add_message "cosmos.bank.v1beta1.QuerySpendableBalanceByDenomRequest" do
+      optional :address, :string, 1, json_name: "address"
+      optional :denom, :string, 2, json_name: "denom"
+    end
+    add_message "cosmos.bank.v1beta1.QuerySpendableBalanceByDenomResponse" do
+      optional :balance, :message, 1, "cosmos.base.v1beta1.Coin", json_name: "balance"
     end
     add_message "cosmos.bank.v1beta1.QueryTotalSupplyRequest" do
       optional :pagination, :message, 1, "cosmos.base.query.v1beta1.PageRequest", json_name: "pagination"
@@ -105,6 +113,8 @@ module Cosmoverse
             QueryAllBalancesResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("cosmos.bank.v1beta1.QueryAllBalancesResponse").msgclass
             QuerySpendableBalancesRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("cosmos.bank.v1beta1.QuerySpendableBalancesRequest").msgclass
             QuerySpendableBalancesResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("cosmos.bank.v1beta1.QuerySpendableBalancesResponse").msgclass
+            QuerySpendableBalanceByDenomRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("cosmos.bank.v1beta1.QuerySpendableBalanceByDenomRequest").msgclass
+            QuerySpendableBalanceByDenomResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("cosmos.bank.v1beta1.QuerySpendableBalanceByDenomResponse").msgclass
             QueryTotalSupplyRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("cosmos.bank.v1beta1.QueryTotalSupplyRequest").msgclass
             QueryTotalSupplyResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("cosmos.bank.v1beta1.QueryTotalSupplyResponse").msgclass
             QuerySupplyOfRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("cosmos.bank.v1beta1.QuerySupplyOfRequest").msgclass

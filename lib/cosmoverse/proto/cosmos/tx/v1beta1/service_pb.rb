@@ -20,6 +20,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :order_by, :enum, 3, "cosmos.tx.v1beta1.OrderBy", json_name: "orderBy"
       optional :page, :uint64, 4, json_name: "page"
       optional :limit, :uint64, 5, json_name: "limit"
+      optional :query, :string, 6, json_name: "query"
     end
     add_message "cosmos.tx.v1beta1.GetTxsEventResponse" do
       repeated :txs, :message, 1, "cosmos.tx.v1beta1.Tx", json_name: "txs"
@@ -71,6 +72,18 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     add_message "cosmos.tx.v1beta1.TxEncodeResponse" do
       optional :tx_bytes, :bytes, 1, json_name: "txBytes"
     end
+    add_message "cosmos.tx.v1beta1.TxEncodeAminoRequest" do
+      optional :amino_json, :string, 1, json_name: "aminoJson"
+    end
+    add_message "cosmos.tx.v1beta1.TxEncodeAminoResponse" do
+      optional :amino_binary, :bytes, 1, json_name: "aminoBinary"
+    end
+    add_message "cosmos.tx.v1beta1.TxDecodeAminoRequest" do
+      optional :amino_binary, :bytes, 1, json_name: "aminoBinary"
+    end
+    add_message "cosmos.tx.v1beta1.TxDecodeAminoResponse" do
+      optional :amino_json, :string, 1, json_name: "aminoJson"
+    end
     add_enum "cosmos.tx.v1beta1.OrderBy" do
       value :ORDER_BY_UNSPECIFIED, 0
       value :ORDER_BY_ASC, 1
@@ -105,6 +118,10 @@ module Cosmoverse
             TxDecodeResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("cosmos.tx.v1beta1.TxDecodeResponse").msgclass
             TxEncodeRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("cosmos.tx.v1beta1.TxEncodeRequest").msgclass
             TxEncodeResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("cosmos.tx.v1beta1.TxEncodeResponse").msgclass
+            TxEncodeAminoRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("cosmos.tx.v1beta1.TxEncodeAminoRequest").msgclass
+            TxEncodeAminoResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("cosmos.tx.v1beta1.TxEncodeAminoResponse").msgclass
+            TxDecodeAminoRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("cosmos.tx.v1beta1.TxDecodeAminoRequest").msgclass
+            TxDecodeAminoResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("cosmos.tx.v1beta1.TxDecodeAminoResponse").msgclass
             OrderBy = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("cosmos.tx.v1beta1.OrderBy").enummodule
             BroadcastMode = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("cosmos.tx.v1beta1.BroadcastMode").enummodule
           end

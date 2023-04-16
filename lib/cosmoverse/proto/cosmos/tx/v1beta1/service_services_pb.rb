@@ -41,6 +41,14 @@ module Cosmoverse
                 #
                 # Since: cosmos-sdk 0.47
                 rpc :TxEncode, ::Cosmoverse::Proto::Cosmos::Tx::V1beta1::Service::TxEncodeRequest, ::Cosmoverse::Proto::Cosmos::Tx::V1beta1::Service::TxEncodeResponse
+                # TxEncodeAmino encodes an Amino transaction from JSON to encoded bytes.
+                #
+                # Since: cosmos-sdk 0.47
+                rpc :TxEncodeAmino, ::Cosmoverse::Proto::Cosmos::Tx::V1beta1::Service::TxEncodeAminoRequest, ::Cosmoverse::Proto::Cosmos::Tx::V1beta1::Service::TxEncodeAminoResponse
+                # TxDecodeAmino decodes an Amino transaction from encoded bytes to JSON.
+                #
+                # Since: cosmos-sdk 0.47
+                rpc :TxDecodeAmino, ::Cosmoverse::Proto::Cosmos::Tx::V1beta1::Service::TxDecodeAminoRequest, ::Cosmoverse::Proto::Cosmos::Tx::V1beta1::Service::TxDecodeAminoResponse
               end
 
               Stub = Service.rpc_stub_class

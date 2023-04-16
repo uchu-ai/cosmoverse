@@ -5,8 +5,6 @@
 
 require 'google/protobuf'
 
-require 'cosmoverse/proto/gogoproto/gogo_pb'
-
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_file("ibc/applications/transfer/v1/transfer.proto", :syntax => :proto3) do
     add_message "ibc.applications.transfer.v1.DenomTrace" do

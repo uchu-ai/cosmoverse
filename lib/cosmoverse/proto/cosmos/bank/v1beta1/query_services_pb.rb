@@ -28,7 +28,7 @@ module Cosmoverse
                 # When called from another module, this query might consume a high amount of
                 # gas if the pagination field is incorrectly set.
                 rpc :AllBalances, ::Cosmoverse::Proto::Cosmos::Bank::V1beta1::Query::QueryAllBalancesRequest, ::Cosmoverse::Proto::Cosmos::Bank::V1beta1::Query::QueryAllBalancesResponse
-                # SpendableBalances queries the spenable balance of all coins for a single
+                # SpendableBalances queries the spendable balance of all coins for a single
                 # account.
                 #
                 # When called from another module, this query might consume a high amount of
@@ -36,6 +36,14 @@ module Cosmoverse
                 #
                 # Since: cosmos-sdk 0.46
                 rpc :SpendableBalances, ::Cosmoverse::Proto::Cosmos::Bank::V1beta1::Query::QuerySpendableBalancesRequest, ::Cosmoverse::Proto::Cosmos::Bank::V1beta1::Query::QuerySpendableBalancesResponse
+                # SpendableBalanceByDenom queries the spendable balance of a single denom for
+                # a single account.
+                #
+                # When called from another module, this query might consume a high amount of
+                # gas if the pagination field is incorrectly set.
+                #
+                # Since: cosmos-sdk 0.47
+                rpc :SpendableBalanceByDenom, ::Cosmoverse::Proto::Cosmos::Bank::V1beta1::Query::QuerySpendableBalanceByDenomRequest, ::Cosmoverse::Proto::Cosmos::Bank::V1beta1::Query::QuerySpendableBalanceByDenomResponse
                 # TotalSupply queries the total supply of all coins.
                 #
                 # When called from another module, this query might consume a high amount of
