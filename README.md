@@ -1,8 +1,8 @@
 # Cosmoverse
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/cosmoverse`. To experiment with that code, run `bin/console` for an interactive prompt.
+The Cosmoverse GEM tries to make it easy to request data directly from the Cosmos blockchains. Cosmovers attempt to wrap complex blockchain data types in an easy-to-understand structure.
 
-TODO: Delete this and the text above, and describe your gem
+This project is in a very early stage and will most likely change dramatically.
 
 ## Installation
 
@@ -39,19 +39,6 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ```
 bin/generate_protos
-```
-
-### TODO
-
-- ~~Extract network clients for diffrent request.~~
-- Create presenters for RPC responses.
-- Use POST for JSON::PRC requests.
-- Test helper to send transactions with gaiad and wait for next block.
-- Find out about gRPC/JSON::RPC authentication and apply it.
-- Lock protos to exact version of cosmos-sdk release.
-- Error handling for bad requests `Cosmoverse::Cosmos::Tx.received_txs("address", limit: 3, offset: 4)`.
-```
-https://grpc.io/docs/guides/auth/#with-server-authentication-ssltls-1
 ```
 
 ## Contributing

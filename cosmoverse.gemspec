@@ -10,15 +10,15 @@ Gem::Specification.new do |spec|
 
   spec.summary = "Ruby client for the cosmos ecosystem."
   spec.description = "Ruby client for the cosmos ecosystem."
-  spec.homepage = "https://github.com/arkirchner/cosmoverse"
+  spec.homepage = "https://github.com/uchu-ai/cosmoverse"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.1.0"
 
   spec.metadata["allowed_push_host"] = "https://rubygems.org/"
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "https://github.com/arkirchner/cosmoverse"
-  spec.metadata["changelog_uri"] = "https://github.com/arkirchner/cosmoverse/blob/main/CHANGELOG.md"
+  spec.metadata["source_code_uri"] = "https://github.com/uchu-ai/cosmoverse"
+  spec.metadata["changelog_uri"] = "https://github.com/uchu-ai/cosmoverse/blob/main/CHANGELOG.md"
   spec.metadata["rubygems_mfa_required"] = "true"
 
   spec.add_dependency "grpc"
