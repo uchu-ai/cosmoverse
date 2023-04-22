@@ -9,7 +9,7 @@ module Cosmoverse
         def test_get
           ibc_denom = "ibc/14F9BC3E44B8A9C1BE1FB08980FAB87034C9905EF17CF2F5008FC085218811CC"
 
-          denom_trace = Cosmoverse::Cosmos.config.stub :tendermint_host, "https://rpc.cosmos.network" do
+          denom_trace = Cosmoverse::Cosmos.config.stub :tendermint_host, TendermintTestHelper.host do
             Cosmoverse::Cosmos.config.stub :mode, :http do
               Cosmoverse::Cosmos::Ibc::DenomTrace.get(ibc_denom)
             end
@@ -20,7 +20,7 @@ module Cosmoverse
         end
 
         def test_page
-          denom_trace_page = Cosmoverse::Cosmos.config.stub :tendermint_host, "https://rpc.cosmos.network" do
+          denom_trace_page = Cosmoverse::Cosmos.config.stub :tendermint_host, TendermintTestHelper.host do
             Cosmoverse::Cosmos.config.stub :mode, :http do
               Cosmoverse::Cosmos::Ibc::DenomTrace.page
             end

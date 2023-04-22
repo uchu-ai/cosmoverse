@@ -24,7 +24,7 @@ module Cosmoverse
       end
 
       def test_denoms_meta
-        denoms_metadata = Cosmoverse::Cosmos.config.stub :tendermint_host, "https://rpc.cosmos.network" do
+        denoms_metadata = Cosmoverse::Cosmos.config.stub :tendermint_host, TendermintTestHelper.host do
           Cosmoverse::Cosmos.config.stub :mode, :http do
             Cosmoverse::Cosmos::Bank.denoms_metadata.metadatas.map(&:to_h)
           end
@@ -46,13 +46,15 @@ module Cosmoverse
                   aliases: ["milliatom"]
                 },
                 {
-                  denom: "atom", exponent: 6, aliases: []
+                  denom: "atom",
+                  exponent: 6,
+                  aliases: []
                 }
               ],
               base: "uatom",
               display: "atom",
-              name: "",
-              symbol: "",
+              name: "Cosmos Hub Atom",
+              symbol: "ATOM",
               uri: "",
               uri_hash: ""
             }

@@ -8,3 +8,4 @@ require "minitest/autorun"
 require "byebug"
 
 require_relative "support/gaia_test_helper"
+require_relative "support/tendermint_test_helper"
