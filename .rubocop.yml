@@ -20,6 +20,11 @@ Style/StringLiteralsInInterpolation:
   Enabled: true
   EnforcedStyle: double_quotes
 
+Metrics/ClassLength:
+  Enabled: true
+  Exclude:
+    - test/**/*
+
 Layout/LineLength:
   Max: 120
   Exclude:

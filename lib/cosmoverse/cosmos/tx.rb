@@ -15,7 +15,33 @@ module Cosmoverse
         end
       end
 
-      TransferEvent = Struct.new("TransferEvent", :recipient, :sender, :amount)
+      TransferEvent = Struct.new("TransferEvent", :recipient, :sender, :amount) do
+        def self.for(abci_message_log)
+          new(*abci_message_log.events.last.attributes.map(&:value))
+        end
+      end
+
+      DelegationEvent = Struct.new("DelegationEvent", :delegator, :reward_amount, :validator, :amount) do
+        def self.for(abci_message_log)
+          new(*abci_message_log.events.first.attributes.map(&:value))
+        end
+      end
+
+      RewardEvent = Struct.new("RewardEvent", :delegator, :validator, :amount) do
+        def self.for(abci_message_log)
+          new(*abci_message_log.events[3].attributes.map(&:value))
+        end
+      end
+
+      UndeligateEvent =
+        Struct.new("UndeligateEvent", :validator, :amount, :completion_time, :delegator, :auto_reward_claim) do
+          def self.for(abci_message_log)
+            validator, _, completion_time = abci_message_log.events[4].attributes.map(&:value)
+            delegator, auto_reward_claim, _, amount = abci_message_log.events[0].attributes.map(&:value)
+
+            new(validator, amount, Time.parse(completion_time), delegator, auto_reward_claim)
+          end
+        end
 
       class Collection
         extend Cosmoverse::Cosmos::Collectable::Loadable
@@ -70,11 +96,17 @@ module Cosmoverse
         [self.class, tx_hash].hash
       end
 
-      def events
+      def events # rubocop:disable Metrics/MethodLength
         @logs.map do |log|
           case log.events.map(&:type)
           when %w[coin_received coin_spent message transfer]
-            TransferEvent.new(*log.events.last.attributes.map(&:value))
+            TransferEvent.for(log)
+          when %w[coin_received coin_spent delegate message transfer withdraw_rewards]
+            DelegationEvent.for(log)
+          when %w[coin_received coin_spent message transfer withdraw_rewards]
+            RewardEvent.for(log)
+          when %w[coin_received coin_spent message transfer unbond withdraw_rewards]
+            UndeligateEvent.for(log)
           else
             raise "Unknown ABCIMessageLog at '#{log.msg_index}' for tx: '#{tx_hash}'"
           end
